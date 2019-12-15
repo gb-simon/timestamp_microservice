@@ -1,32 +1,56 @@
 'use strict';
 
-const path = require('path');
-const moment = require('moment');
+var express = require('express');
+var app = express();
 
-const express = require('express');
-const app = express();
+var cors = require('cors');
 
-app.set('port', (process.env.PORT || 5000));
+app.use(cors());
 
-app.use(express.static(path.resolve(__dirname, 'client')));
-app.get('/:timestamp', (req,res) => {
-  let time = moment(req.params.timestamp, 'MMMM DD, YYYY', true);
-  if (!time.isValid())
-    time = moment.unix(req.params.timestamp);
-  
-  if (!time.isValid()) {
-    res.json({
-      'humanReadable': null,
-      'unix': null
-    });
-  }
-  
-  res.json({
-    'humanReadable': time.format('MMMM DD, YYYY'),
-    'unix': time.format('X')
+app.use('/public', express.static(process.cwd() + '/public'));
+
+app.route('/')
+  .get(function (req, res) {
+    res.sendFile(process.cwd() + '/views/index.html');
   });
+    
+app.route('/api/timestamp/:date?')
+  .get(function (req, res){
+    
+    var date = null;
+    // parse the date string
+    if (req.params.date !== undefined) {
+
+      var unixTimestamp = parseInt(req.params.date*1);
+      if (isNaN(unixTimestamp)) {
+        
+        date = new Date(req.params.date);
+      } else {
+        
+        // it is a timestamp
+        date = new Date(unixTimestamp);
+      }
+      
+    } else {
+      
+      date = new Date(Date.now());
+    }
+    
+    var response = date == "Invalid Date" ? 
+      { error: "Invalid Date" } :
+      { "unix": date.getTime(),
+        "utc": date.toUTCString()
+      };
+    
+    res.json(response);
+  });
+    
+app.use(function(req, res, next) {
+  res.status(404)
+    .type('text')
+    .send('Not Found');
 });
 
-app.listen(app.get('port'), () => {
-  console.log(`Server listening on port ${app.get('port')}`);
+app.listen(process.env.PORT || 3000, function () {
+  console.log('Node.js listening ...');
 });

@@ -2,21 +2,25 @@
   "name": "timestamp-microservice-api",
   "version": "0.0.1",
   "description": "timestamps free Code Camp project.",
-  "main": "server.js",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ltegman/timestamp-microservice-api"
-  },
-  "author": "Simon",
-  "dependencies": {
-    "body-parser": "^1.14.2",
-    "express": "~3.2.4",
-    "moment": "^2.10.6"
-  },
-  "scripts": {
-    "start": "node server.js"
-  },
-  "engines": {
-    "node": "4.2.4"
-  }
+	"main": "server.js",
+	"scripts": {
+		"start": "node server.js"
+	},
+	"dependencies": {
+		"express": "^5.0.0-alpha.2",
+		"cors": "^2.8.1"
+	},
+	"engines": {
+		"node": "4.4.5"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/gb-simon/timestamp_microservice"
+	},
+	"keywords": [
+		"node",
+		"hyperdev",
+		"express"
+	],
+	"license": "MIT"
 }
