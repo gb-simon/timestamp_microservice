@@ -1,7 +1,7 @@
 {
   "name": "timestamp-microservice-api",
   "version": "0.0.1",
-  "description": "Simple API to validate human readable and unix timestamps. Free Code Camp project.",
+  "description": "timestamps free Code Camp project.",
   "main": "server.js",
   "repository": {
     "type": "git",
